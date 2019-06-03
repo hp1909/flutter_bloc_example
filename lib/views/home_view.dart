@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:manabie_code_challenge/blocs/detail/detail.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:manabie_code_challenge/providers/data_repository.dart';
 import 'package:manabie_code_challenge/widgets/card_detail.dart';
 
 import 'package:manabie_code_challenge/widgets/card_element.dart';
@@ -13,12 +14,14 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  DataRepository dataRepository;
   ListBloc _listBloc;
   DetailBloc _detailBloc;
 
   @override
   void initState() {
-    _listBloc = ListBloc();
+    dataRepository = DataRepository();
+    _listBloc = ListBloc(dataRepository: dataRepository);
     _detailBloc = DetailBloc(listBloc: _listBloc);
     _listBloc.dispatch(InitList());
     super.initState();

@@ -14,13 +14,7 @@ class IncreaseTile extends ListEvent {
   final Tile tile;
 
   IncreaseTile({this.tile}) : super([tile]);
-}
-
-class TapListItem extends ListEvent {
-  final Tile tile;
-
-  TapListItem({this.tile}) : super([tile]);
 
   @override
-  String toString() => 'TapListItem';
+  String toString() => 'IncreaseTile';
 }

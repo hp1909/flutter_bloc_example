@@ -14,5 +14,5 @@ class DetailSelected extends DetailState {
   DetailSelected({this.tile}) : super([tile]);
 
   @override
-  String toString() => 'SelectDetail';
+  String toString() => 'DetailSelected';
 }

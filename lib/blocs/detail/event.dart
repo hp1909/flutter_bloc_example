@@ -14,12 +14,3 @@ class SelectDetail extends DetailEvent {
   @override
   String toString() => 'SelectDetail';
 }
-
-class Increment extends DetailEvent {
-  final Tile tile;
-
-  Increment({this.tile}) : super([tile]);
-
-  @override
-  String toString() => 'Increment';
-}

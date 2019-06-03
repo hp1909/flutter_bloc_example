@@ -12,4 +12,13 @@ class Tile {
       color: color ?? this.color,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Tile &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          value == other.value &&
+          color == other.color;
 }
