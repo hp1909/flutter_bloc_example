@@ -10,6 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
+  equatable: ^0.2.6
+  uuid: ^2.0.1
+  flutter_bloc: ^0.15.1
 
 dev_dependencies:
   flutter_test:
