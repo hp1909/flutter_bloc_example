@@ -13,9 +13,13 @@ dependencies:
   equatable: ^0.2.6
   uuid: ^2.0.1
   flutter_bloc: ^0.15.1
+  get_it: ^1.0.3+1
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  test: any
+  flutter_driver:
     sdk: flutter
   mockito: ^4.1.0
 

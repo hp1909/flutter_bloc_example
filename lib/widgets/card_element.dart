@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:manabie_code_challenge/models/tile.dart';
+import 'package:manabie_code_challenge/utils/common_style.dart';
 import 'package:manabie_code_challenge/utils/hex_color.dart';
+import 'package:manabie_code_challenge/utils/keys.dart';
 
 class CardElement extends StatefulWidget {
   final Tile tile;
@@ -23,7 +25,8 @@ class _CardElementState extends State<CardElement> {
       child: Center(
         child: Text(
           '${widget.tile.value}',
-          style: TextStyle(fontSize: 50),
+          key: listTileItemTextKey(widget.tile.id),
+          style: TEXT_BIG,
         ),
       ),
     );

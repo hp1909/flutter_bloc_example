@@ -1,15 +1,16 @@
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:mockito/mockito.dart';
 
+import 'package:manabie_code_challenge/locator.dart';
 import 'package:manabie_code_challenge/models/tile.dart';
 import 'package:manabie_code_challenge/providers/data_repository.dart';
 import 'package:manabie_code_challenge/blocs/list/list.dart';
 import 'package:manabie_code_challenge/blocs/detail/detail.dart';
-
-class MockDataRepository extends Mock implements DataRepository {}
+import '../helpers/mock_repositories.dart';
 
 main() {
-  MockDataRepository dataRepository;
+  registerMockDataRepository();
   ListBloc listBloc;
   DetailBloc detailBloc;
   List<Tile> tiles = [
@@ -19,25 +20,24 @@ main() {
   ];
 
   setUp(() {
-    dataRepository = MockDataRepository();
-    listBloc = ListBloc(dataRepository: dataRepository);
+    listBloc = ListBloc(dataRepository: getIt<DataRepository>());
     detailBloc = DetailBloc(listBloc: listBloc);
 
-    when(dataRepository.initTiles()).thenAnswer((_) => Future.value(tiles));
+    when(getIt<DataRepository>().initTiles()).thenAnswer((_) => Future.value(tiles));
   });
 
   group('DetailBloc', () {
-    test('initial state is correct', () {
+    test('should init correct state', () {
       expect(detailBloc.initialState, DetailUninitialized());
     });
 
-    test('dispose does not emit new states', () {
+    test('should not emit new states when dispose', () {
       expect(detailBloc.state, emitsInOrder([]));
 
       detailBloc.dispose();
     });
 
-    test('emit a Tile when dispatch SelectDetail event', () {
+    test('should emit a Tile when dispatch SelectDetail event', () {
       final selectedTile = Tile(id: '8', color: '#2ecc71');
       final expectedResponses = [
         DetailUninitialized(),
@@ -49,7 +49,7 @@ main() {
     });
 
     test(
-        'does not emit Tile when increase a Tile in list but DetailTile not selected',
+        'should not emit DetailSelected when increase a Tile in list but DetailTile not selected',
         () {
       final tileToUpdate = Tile(id: '8', color: '#2ecc71');
       final expectedResponses = [
@@ -62,7 +62,7 @@ main() {
       listBloc.dispatch(IncreaseTile(tile: tileToUpdate));
     });
 
-    test('emit Tile when increase a Tile in list and DetailTile is selected',
+    test('should emit DetailSelected when increase a Tile in list and DetailTile is selected',
         () {
       final selectedTile = Tile(id: '8', color: '#2ecc71');
       final tileToUpdate = Tile(id: '8', color: '#2ecc71');
@@ -79,5 +79,10 @@ main() {
       detailBloc.dispatch(SelectDetail(tile: selectedTile));
       listBloc.dispatch(IncreaseTile(tile: tileToUpdate));
     });
+  });
+
+  tearDown(() {
+    detailBloc.dispose();
+    listBloc.dispose();
   });
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:manabie_code_challenge/blocs/detail/detail.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:manabie_code_challenge/locator.dart';
 import 'package:manabie_code_challenge/providers/data_repository.dart';
+import 'package:manabie_code_challenge/utils/keys.dart';
 import 'package:manabie_code_challenge/widgets/card_detail.dart';
 
 import 'package:manabie_code_challenge/widgets/card_element.dart';
@@ -20,7 +22,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   void initState() {
-    dataRepository = DataRepository();
+    dataRepository = getIt<DataRepository>();
     _listBloc = ListBloc(dataRepository: dataRepository);
     _detailBloc = DetailBloc(listBloc: _listBloc);
     _listBloc.dispatch(InitList());
@@ -52,6 +54,7 @@ class _HomeViewState extends State<HomeView> {
                   if (state is ListLoaded) {
                     final tiles = state.tiles;
                     return ListView.builder(
+                      key: LIST_TILES_KEY,
                       scrollDirection: Axis.horizontal,
                       itemCount: tiles.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -61,6 +64,7 @@ class _HomeViewState extends State<HomeView> {
                                 .dispatch(SelectDetail(tile: tiles[index]));
                           },
                           child: CardElement(
+                            key: listTileItemKey(tiles[index].id),
                             tile: tiles[index],
                           ),
                         );
@@ -77,13 +81,16 @@ class _HomeViewState extends State<HomeView> {
               bloc: _detailBloc,
               builder: (BuildContext context, DetailState state) {
                 if (state is DetailUninitialized) {
-                  return Container();
+                  return Container(
+                    key: EMPTY_DETAIL_TILE_KEY,
+                  );
                 }
                 if (state is DetailSelected) {
                   return GestureDetector(
                     onTap: () =>
                         _listBloc.dispatch(IncreaseTile(tile: state.tile)),
                     child: CardDetail(
+                      key: DETAIL_TILE_KEY,
                       tile: state.tile,
                     ),
                   );

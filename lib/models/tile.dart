@@ -21,4 +21,7 @@ class Tile {
           id == other.id &&
           value == other.value &&
           color == other.color;
+
+  @override
+  int get hashCode => id.hashCode;
 }

@@ -3,7 +3,7 @@ import 'package:manabie_code_challenge/models/tile.dart';
 
 main() {
   group('Tile', () {
-    test('generate correctly Tile from Tile constructor', () {
+    test('should generate correctly Tile from Tile constructor', () {
       const tileId = '1';
       const tileValue = 10;
       const tileColor = '#123456';
@@ -14,7 +14,7 @@ main() {
       expect(tile.color, tileColor);
     });
 
-    test('return new Tile when use copyWith function', () {
+    test('should return new Tile when use copyWith function', () {
       const tileId = '1';
       const tileValue = 10;
       const tileColor = '#123456';
@@ -31,6 +31,15 @@ main() {
       expect(newTile2.id, tileId);
       expect(newTile2.value, newTileValue);
       expect(newTile2.color, tileColor);
+    });
+
+    test('should return correctly when using ==', () {
+      final tile1 = Tile(id: '1', color: '#123456', value: 1);
+      final tile2 = Tile(id: '1', color: '#123456', value: 1);
+      final tile3 = Tile(id: '1', color: '#123456', value: 2);
+
+      expect(tile1, tile2);
+      expect(tile1, isNot(equals(tile3)));
     });
   });
 }

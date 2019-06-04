@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:manabie_code_challenge/models/tile.dart';
+import 'package:manabie_code_challenge/utils/common_style.dart';
 import 'package:manabie_code_challenge/utils/hex_color.dart';
 
 class CardDetail extends StatelessWidget {
@@ -19,7 +20,7 @@ class CardDetail extends StatelessWidget {
         child: Center(
           child: Text(
             '${tile.value}',
-            style: TextStyle(fontSize: 50),
+            style: TEXT_BIG,
           ),
         ),
       ),

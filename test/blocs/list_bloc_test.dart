@@ -4,36 +4,37 @@ import 'package:mockito/mockito.dart';
 import 'package:manabie_code_challenge/models/tile.dart';
 import 'package:manabie_code_challenge/providers/data_repository.dart';
 import 'package:manabie_code_challenge/blocs/list/list.dart';
+import 'package:manabie_code_challenge/locator.dart';
 
-class MockDataRepository extends Mock implements DataRepository {}
+import '../helpers/mock_repositories.dart';
 
 main() {
-  MockDataRepository dataRepository;
+  registerMockDataRepository();
   ListBloc listBloc;
   List<Tile> tiles = [
     Tile(id: '8', color: '#2ecc71'),
     Tile(id: '9', color: '#2ecc71'),
     Tile(id: '10', color: '#2ecc71'),
   ];
+  
   setUp(() {
-    dataRepository = MockDataRepository();
-    listBloc = ListBloc(dataRepository: dataRepository);
+    listBloc = ListBloc(dataRepository: getIt<DataRepository>());
 
-    when(dataRepository.initTiles()).thenAnswer((_) => Future.value(tiles));
+    when(getIt<DataRepository>().initTiles()).thenAnswer((_) => Future.value(tiles));
   });
 
   group('ListBloc', () {
-    test('initial state is correct', () {
+    test('should init correct state', () {
       expect(listBloc.initialState, ListLoading());
     });
 
-    test('dispose does not emit new states', () {
+    test('should not emit new states when dispose', () {
       expectLater(listBloc.state, emitsInOrder([]));
 
       listBloc.dispose();
     });
 
-    test('emit a list of tiles when dispatch InitList event', () {
+    test('should emit a list of tiles when dispatch InitList event', () {
       final expectedResponses = [
         ListLoading(),
         ListLoaded(tiles: tiles),
@@ -62,5 +63,9 @@ main() {
       listBloc.dispatch(InitList());
       listBloc.dispatch(IncreaseTile(tile: tileToUpdate));
     });
+  });
+
+  tearDown(() {
+    listBloc.dispose();
   });
 }
