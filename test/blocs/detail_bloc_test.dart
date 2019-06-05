@@ -26,6 +26,11 @@ main() {
     when(getIt<DataRepository>().initCards()).thenAnswer((_) => Future.value(cards));
   });
 
+  tearDown(() {
+    detailBloc.dispose();
+    listBloc.dispose();
+  });
+
   group('DetailBloc', () {
     test('should init correct state', () {
       expect(detailBloc.initialState, DetailUninitialized());
@@ -48,9 +53,7 @@ main() {
       detailBloc.dispatch(SelectDetail(card: selectedCard));
     });
 
-    test(
-        'should not emit DetailSelected when increase a Card in list but DetailCard not selected',
-        () {
+    test('should not emit DetailSelected when increase a Card in list but DetailCard not selected', () {
       final cardToUpdate = CardModel(id: '8', color: '#2ecc71');
       final expectedResponses = [
         DetailUninitialized(),
@@ -62,27 +65,20 @@ main() {
       listBloc.dispatch(IncreaseCard(card: cardToUpdate));
     });
 
-    test('should emit DetailSelected when increase a Card in list and DetailCard is selected',
-        () {
+    test('should emit DetailSelected when increase a Card in list and DetailCard is selected', () {
       final selectedCard = CardModel(id: '8', color: '#2ecc71');
-      final cardToUpdate = CardModel(id: '8', color: '#2ecc71');
       final expectedResponses = [
         DetailUninitialized(),
         DetailSelected(card: selectedCard),
         DetailSelected(
-            card: cardToUpdate.copyWith(value: cardToUpdate.value + 1)),
+            card: selectedCard.copyWith(value: selectedCard.value + 1)),
       ];
 
       expectLater(detailBloc.state, emitsInOrder(expectedResponses));
 
       listBloc.dispatch(InitList());
       detailBloc.dispatch(SelectDetail(card: selectedCard));
-      listBloc.dispatch(IncreaseCard(card: cardToUpdate));
+      listBloc.dispatch(IncreaseCard(card: selectedCard));
     });
-  });
-
-  tearDown(() {
-    detailBloc.dispose();
-    listBloc.dispose();
   });
 }

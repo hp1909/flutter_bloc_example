@@ -25,8 +25,7 @@ main() {
   });
 
   group('HomeView', () {
-    testWidgets('should get empty detail card when init home view',
-        (WidgetTester tester) async {
+    testWidgets('should get empty detail card when init home view', (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
         home: Material(
           child: HomeView(),
@@ -41,8 +40,7 @@ main() {
       expect(find.byType(CardElement), findsNWidgets(3));
     });
 
-    testWidgets('show correctly detail card when select a card in list',
-        (WidgetTester tester) async {
+    testWidgets('should show correctly detail card when select a card in list', (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
         home: Material(
           child: HomeView(),
@@ -56,9 +54,7 @@ main() {
       expect(find.byKey(DETAIL_CARD_KEY), findsOneWidget);
     });
 
-    testWidgets(
-        'should increase the corresponding card in list when tap on detail card',
-        (WidgetTester tester) async {
+    testWidgets('should increase the corresponding card in list when tap on detail card', (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
         home: Material(
           child: HomeView(),

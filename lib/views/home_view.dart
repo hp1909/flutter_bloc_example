@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:manabie_code_challenge/blocs/detail/detail.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:manabie_code_challenge/blocs/detail/detail.dart';
 import 'package:manabie_code_challenge/locator.dart';
 import 'package:manabie_code_challenge/repositories/data_repository.dart';
 import 'package:manabie_code_challenge/utils/keys.dart';
 import 'package:manabie_code_challenge/widgets/card_detail.dart';
-
 import 'package:manabie_code_challenge/widgets/card_element.dart';
 import '../blocs/list/list.dart';
 import '../blocs/detail/detail.dart';
@@ -59,10 +60,7 @@ class _HomeViewState extends State<HomeView> {
                       itemCount: cards.length,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
-                          onTap: () {
-                            _detailBloc
-                                .dispatch(SelectDetail(card: cards[index]));
-                          },
+                          onTap: () => _detailBloc.dispatch(SelectDetail(card: cards[index])),
                           child: CardElement(
                             key: cardItemKey(cards[index].id),
                             card: cards[index],
@@ -87,8 +85,7 @@ class _HomeViewState extends State<HomeView> {
                 }
                 if (state is DetailSelected) {
                   return GestureDetector(
-                    onTap: () =>
-                        _listBloc.dispatch(IncreaseCard(card: state.card)),
+                    onTap: () => _listBloc.dispatch(IncreaseCard(card: state.card)),
                     child: CardDetail(
                       key: DETAIL_CARD_KEY,
                       card: state.card,

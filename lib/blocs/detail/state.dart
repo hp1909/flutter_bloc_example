@@ -6,7 +6,10 @@ abstract class DetailState extends Equatable {
   DetailState([final props = const []]) : super(props);
 }
 
-class DetailUninitialized extends DetailState {}
+class DetailUninitialized extends DetailState {
+  @override
+  String toString() => 'DetailUninitialized';
+}
 
 class DetailSelected extends DetailState {
   final CardModel card;

@@ -5,7 +5,6 @@ import 'package:manabie_code_challenge/models/card.dart';
 import 'package:manabie_code_challenge/repositories/data_repository.dart';
 import 'package:manabie_code_challenge/blocs/list/list.dart';
 import 'package:manabie_code_challenge/locator.dart';
-
 import '../helpers/mock_repositories.dart';
 
 main() {
@@ -21,6 +20,10 @@ main() {
     listBloc = ListBloc(dataRepository: getIt<DataRepository>());
 
     when(getIt<DataRepository>().initCards()).thenAnswer((_) => Future.value(cards));
+  });
+
+  tearDown(() {
+    listBloc.dispose();
   });
 
   group('ListBloc', () {
@@ -45,7 +48,7 @@ main() {
       listBloc.dispatch(InitList());
     });
 
-    test('emit an updated list of cards when dispatch IncreaseCard event', () {
+    test('should emit an updated list of cards when dispatch IncreaseCard event', () {
       final cardToUpdate = CardModel(id: '8', color: '#2ecc71');
       List<CardModel> updatedCards = [
         CardModel(id: '8', color: '#2ecc71', value: 1),
@@ -63,9 +66,5 @@ main() {
       listBloc.dispatch(InitList());
       listBloc.dispatch(IncreaseCard(card: cardToUpdate));
     });
-  });
-
-  tearDown(() {
-    listBloc.dispose();
   });
 }

@@ -21,5 +21,6 @@ void main() {
   when(getIt<DataRepository>().initCards()).thenAnswer(
     (_) => Future.value(cards),
   );
+
   runApp(MyApp());
 }

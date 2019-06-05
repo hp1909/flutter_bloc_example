@@ -17,7 +17,6 @@ class CardElement extends StatefulWidget {
 class _CardElementState extends State<CardElement> {
   @override
   Widget build(BuildContext context) {
-    print(widget.card.color);
     return Container(
       margin: EdgeInsets.all(10),
       width: 100,

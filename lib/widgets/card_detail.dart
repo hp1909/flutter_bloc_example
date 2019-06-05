@@ -11,7 +11,6 @@ class CardDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('render card detail');
     return Center(
       child: Container(
         width: 200,
