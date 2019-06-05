@@ -17,11 +17,11 @@ void main() {
   });
 
   group('App', () {
-    final listFinder = find.byValueKey('__LIST_TILES_KEY__');
-    final emptyDetailFinder = find.byValueKey('__EMPTY_DETAIL_TILE_KEY__');
-    final detailCardFinder = find.byValueKey('__DETAIL_TILE_KEY__');
-    final firstCardFinder = find.byValueKey('__LIST_TILES_ITEM_8_KEY__');
-    final firstCardTextFinder = find.byValueKey('__LIST_TILES_ITEM_8_TEXT_KEY__');
+    final listFinder = find.byValueKey('__LIST_CARDS_KEY__');
+    final emptyDetailFinder = find.byValueKey('__EMPTY_DETAIL_CARD_KEY__');
+    final detailCardFinder = find.byValueKey('__DETAIL_CARD_KEY__');
+    final firstCardFinder = find.byValueKey('__CARD_ITEM_8_KEY__');
+    final firstCardTextFinder = find.byValueKey('__CARD_ITEM_8_TEXT_KEY__');
 
     test('should have empty detail widget when open app', () async {
       await driver.waitFor(listFinder);

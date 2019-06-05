@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import 'package:manabie_code_challenge/models/tile.dart';
-import 'package:manabie_code_challenge/providers/data_repository.dart';
+import 'package:manabie_code_challenge/models/card.dart';
+import 'package:manabie_code_challenge/repositories/data_repository.dart';
 import 'package:manabie_code_challenge/blocs/list/list.dart';
 import 'package:manabie_code_challenge/locator.dart';
 
@@ -11,16 +11,16 @@ import '../helpers/mock_repositories.dart';
 main() {
   registerMockDataRepository();
   ListBloc listBloc;
-  List<Tile> tiles = [
-    Tile(id: '8', color: '#2ecc71'),
-    Tile(id: '9', color: '#2ecc71'),
-    Tile(id: '10', color: '#2ecc71'),
+  List<CardModel> cards = [
+    CardModel(id: '8', color: '#2ecc71'),
+    CardModel(id: '9', color: '#2ecc71'),
+    CardModel(id: '10', color: '#2ecc71'),
   ];
   
   setUp(() {
     listBloc = ListBloc(dataRepository: getIt<DataRepository>());
 
-    when(getIt<DataRepository>().initTiles()).thenAnswer((_) => Future.value(tiles));
+    when(getIt<DataRepository>().initCards()).thenAnswer((_) => Future.value(cards));
   });
 
   group('ListBloc', () {
@@ -34,10 +34,10 @@ main() {
       listBloc.dispose();
     });
 
-    test('should emit a list of tiles when dispatch InitList event', () {
+    test('should emit a list of cards when dispatch InitList event', () {
       final expectedResponses = [
         ListLoading(),
-        ListLoaded(tiles: tiles),
+        ListLoaded(cards: cards),
       ];
 
       expectLater(listBloc.state, emitsInOrder(expectedResponses));
@@ -45,23 +45,23 @@ main() {
       listBloc.dispatch(InitList());
     });
 
-    test('emit an updated list of tiles when dispatch IncreaseTile event', () {
-      final tileToUpdate = Tile(id: '8', color: '#2ecc71');
-      List<Tile> updatedTiles = [
-        Tile(id: '8', color: '#2ecc71', value: 1),
-        Tile(id: '9', color: '#2ecc71'),
-        Tile(id: '10', color: '#2ecc71'),
+    test('emit an updated list of cards when dispatch IncreaseCard event', () {
+      final cardToUpdate = CardModel(id: '8', color: '#2ecc71');
+      List<CardModel> updatedCards = [
+        CardModel(id: '8', color: '#2ecc71', value: 1),
+        CardModel(id: '9', color: '#2ecc71'),
+        CardModel(id: '10', color: '#2ecc71'),
       ];
       final expectedResponses = [
         ListLoading(),
-        ListLoaded(tiles: tiles),
-        ListLoaded(tiles: updatedTiles),
+        ListLoaded(cards: cards),
+        ListLoaded(cards: updatedCards),
       ];
 
       expectLater(listBloc.state, emitsInOrder(expectedResponses));
 
       listBloc.dispatch(InitList());
-      listBloc.dispatch(IncreaseTile(tile: tileToUpdate));
+      listBloc.dispatch(IncreaseCard(card: cardToUpdate));
     });
   });
 

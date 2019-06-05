@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:manabie_code_challenge/models/tile.dart';
+import 'package:manabie_code_challenge/models/card.dart';
 
 abstract class ListEvent extends Equatable {
   ListEvent([List props = const []]) : super(props);
@@ -10,11 +10,11 @@ class InitList extends ListEvent {
   String toString() => 'InitList';
 }
 
-class IncreaseTile extends ListEvent {
-  final Tile tile;
+class IncreaseCard extends ListEvent {
+  final CardModel card;
 
-  IncreaseTile({this.tile}) : super([tile]);
+  IncreaseCard({this.card}) : super([card]);
 
   @override
-  String toString() => 'IncreaseTile';
+  String toString() => 'IncreaseCard';
 }

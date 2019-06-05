@@ -1,12 +1,12 @@
-class Tile {
+class CardModel {
   String id;
   int value;
   String color;
 
-  Tile({this.id, this.value = 0, this.color});
+  CardModel({this.id, this.value = 0, this.color});
 
-  Tile copyWith({String id, int value, String color}) {
-    return Tile(
+  CardModel copyWith({String id, int value, String color}) {
+    return CardModel(
       id: id ?? this.id,
       value: value ?? this.value,
       color: color ?? this.color,
@@ -16,7 +16,7 @@ class Tile {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Tile &&
+      other is CardModel &&
           runtimeType == other.runtimeType &&
           id == other.id &&
           value == other.value &&

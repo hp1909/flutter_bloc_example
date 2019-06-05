@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import 'package:manabie_code_challenge/locator.dart';
-import 'package:manabie_code_challenge/models/tile.dart';
-import 'package:manabie_code_challenge/providers/data_repository.dart';
+import 'package:manabie_code_challenge/models/card.dart';
+import 'package:manabie_code_challenge/repositories/data_repository.dart';
 import 'package:manabie_code_challenge/blocs/list/list.dart';
 import 'package:manabie_code_challenge/blocs/detail/detail.dart';
 import '../helpers/mock_repositories.dart';
@@ -13,17 +13,17 @@ main() {
   registerMockDataRepository();
   ListBloc listBloc;
   DetailBloc detailBloc;
-  List<Tile> tiles = [
-    Tile(id: '8', color: '#2ecc71'),
-    Tile(id: '9', color: '#2ecc71'),
-    Tile(id: '10', color: '#2ecc71'),
+  List<CardModel> cards = [
+    CardModel(id: '8', color: '#2ecc71'),
+    CardModel(id: '9', color: '#2ecc71'),
+    CardModel(id: '10', color: '#2ecc71'),
   ];
 
   setUp(() {
     listBloc = ListBloc(dataRepository: getIt<DataRepository>());
     detailBloc = DetailBloc(listBloc: listBloc);
 
-    when(getIt<DataRepository>().initTiles()).thenAnswer((_) => Future.value(tiles));
+    when(getIt<DataRepository>().initCards()).thenAnswer((_) => Future.value(cards));
   });
 
   group('DetailBloc', () {
@@ -37,21 +37,21 @@ main() {
       detailBloc.dispose();
     });
 
-    test('should emit a Tile when dispatch SelectDetail event', () {
-      final selectedTile = Tile(id: '8', color: '#2ecc71');
+    test('should emit a DetailSelected when dispatch SelectDetail event', () {
+      final selectedCard = CardModel(id: '8', color: '#2ecc71');
       final expectedResponses = [
         DetailUninitialized(),
-        DetailSelected(tile: selectedTile),
+        DetailSelected(card: selectedCard),
       ];
 
       expectLater(detailBloc.state, emitsInOrder(expectedResponses));
-      detailBloc.dispatch(SelectDetail(tile: selectedTile));
+      detailBloc.dispatch(SelectDetail(card: selectedCard));
     });
 
     test(
-        'should not emit DetailSelected when increase a Tile in list but DetailTile not selected',
+        'should not emit DetailSelected when increase a Card in list but DetailCard not selected',
         () {
-      final tileToUpdate = Tile(id: '8', color: '#2ecc71');
+      final cardToUpdate = CardModel(id: '8', color: '#2ecc71');
       final expectedResponses = [
         DetailUninitialized(),
       ];
@@ -59,25 +59,25 @@ main() {
       expectLater(detailBloc.state, emitsInOrder(expectedResponses));
 
       listBloc.dispatch(InitList());
-      listBloc.dispatch(IncreaseTile(tile: tileToUpdate));
+      listBloc.dispatch(IncreaseCard(card: cardToUpdate));
     });
 
-    test('should emit DetailSelected when increase a Tile in list and DetailTile is selected',
+    test('should emit DetailSelected when increase a Card in list and DetailCard is selected',
         () {
-      final selectedTile = Tile(id: '8', color: '#2ecc71');
-      final tileToUpdate = Tile(id: '8', color: '#2ecc71');
+      final selectedCard = CardModel(id: '8', color: '#2ecc71');
+      final cardToUpdate = CardModel(id: '8', color: '#2ecc71');
       final expectedResponses = [
         DetailUninitialized(),
-        DetailSelected(tile: selectedTile),
+        DetailSelected(card: selectedCard),
         DetailSelected(
-            tile: tileToUpdate.copyWith(value: tileToUpdate.value + 1)),
+            card: cardToUpdate.copyWith(value: cardToUpdate.value + 1)),
       ];
 
       expectLater(detailBloc.state, emitsInOrder(expectedResponses));
 
       listBloc.dispatch(InitList());
-      detailBloc.dispatch(SelectDetail(tile: selectedTile));
-      listBloc.dispatch(IncreaseTile(tile: tileToUpdate));
+      detailBloc.dispatch(SelectDetail(card: selectedCard));
+      listBloc.dispatch(IncreaseCard(card: cardToUpdate));
     });
   });
 

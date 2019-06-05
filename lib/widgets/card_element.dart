@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'package:manabie_code_challenge/models/tile.dart';
+import 'package:manabie_code_challenge/models/card.dart';
 import 'package:manabie_code_challenge/utils/common_style.dart';
 import 'package:manabie_code_challenge/utils/hex_color.dart';
 import 'package:manabie_code_challenge/utils/keys.dart';
 
 class CardElement extends StatefulWidget {
-  final Tile tile;
+  final CardModel card;
 
-  CardElement({Key key, this.tile}) : super(key: key);
+  CardElement({Key key, this.card}) : super(key: key);
 
   @override
   _CardElementState createState() => _CardElementState();
@@ -17,15 +17,15 @@ class CardElement extends StatefulWidget {
 class _CardElementState extends State<CardElement> {
   @override
   Widget build(BuildContext context) {
-    print(widget.tile.color);
+    print(widget.card.color);
     return Container(
       margin: EdgeInsets.all(10),
       width: 100,
-      color: HexColor(widget.tile.color),
+      color: HexColor(widget.card.color),
       child: Center(
         child: Text(
-          '${widget.tile.value}',
-          key: listTileItemTextKey(widget.tile.id),
+          '${widget.card.value}',
+          key: cardItemTextKey(widget.card.id),
           style: TEXT_BIG,
         ),
       ),

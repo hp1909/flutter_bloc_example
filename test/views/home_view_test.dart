@@ -8,20 +8,20 @@ import 'package:manabie_code_challenge/widgets/card_element.dart';
 import 'package:manabie_code_challenge/locator.dart';
 import 'package:manabie_code_challenge/utils/keys.dart';
 import 'package:manabie_code_challenge/views/home_view.dart';
-import 'package:manabie_code_challenge/models/tile.dart';
-import 'package:manabie_code_challenge/providers/data_repository.dart';
+import 'package:manabie_code_challenge/models/card.dart';
+import 'package:manabie_code_challenge/repositories/data_repository.dart';
 import '../helpers/mock_repositories.dart';
 
 main() {
   registerMockDataRepository();
-  List<Tile> tiles = [
-    Tile(id: '8', color: '#2ecc71'),
-    Tile(id: '9', color: '#2ecc71'),
-    Tile(id: '10', color: '#2ecc71'),
+  List<CardModel> cards = [
+    CardModel(id: '8', color: '#2ecc71'),
+    CardModel(id: '9', color: '#2ecc71'),
+    CardModel(id: '10', color: '#2ecc71'),
   ];
 
   setUp(() {
-    when(getIt<DataRepository>().initTiles()).thenAnswer((_) => Future.value(tiles));
+    when(getIt<DataRepository>().initCards()).thenAnswer((_) => Future.value(cards));
   });
 
   group('HomeView', () {
@@ -33,8 +33,8 @@ main() {
         ),
       ));
 
-      expect(find.byKey(EMPTY_DETAIL_TILE_KEY), findsOneWidget);
-      expect(find.byKey(DETAIL_TILE_KEY), findsNothing);
+      expect(find.byKey(EMPTY_DETAIL_CARD_KEY), findsOneWidget);
+      expect(find.byKey(DETAIL_CARD_KEY), findsNothing);
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
       await tester.pump(Duration(seconds: 1));
@@ -52,8 +52,8 @@ main() {
       await tester.tap(find.byType(CardElement).at(0));
       await tester.pumpAndSettle();
 
-      expect(find.byKey(EMPTY_DETAIL_TILE_KEY), findsNothing);
-      expect(find.byKey(DETAIL_TILE_KEY), findsOneWidget);
+      expect(find.byKey(EMPTY_DETAIL_CARD_KEY), findsNothing);
+      expect(find.byKey(DETAIL_CARD_KEY), findsOneWidget);
     });
 
     testWidgets(

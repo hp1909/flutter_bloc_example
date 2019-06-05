@@ -1,45 +1,45 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:manabie_code_challenge/models/tile.dart';
+import 'package:manabie_code_challenge/models/card.dart';
 
 main() {
-  group('Tile', () {
-    test('should generate correctly Tile from Tile constructor', () {
-      const tileId = '1';
-      const tileValue = 10;
-      const tileColor = '#123456';
-      final tile = Tile(id: tileId, value: tileValue, color: tileColor);
+  group('CardModel', () {
+    test('should generate correctly CardModel from CardModel constructor', () {
+      const cardId = '1';
+      const cardValue = 10;
+      const cardColor = '#123456';
+      final card = CardModel(id: cardId, value: cardValue, color: cardColor);
 
-      expect(tile.id, tileId);
-      expect(tile.value, tileValue);
-      expect(tile.color, tileColor);
+      expect(card.id, cardId);
+      expect(card.value, cardValue);
+      expect(card.color, cardColor);
     });
 
-    test('should return new Tile when use copyWith function', () {
-      const tileId = '1';
-      const tileValue = 10;
-      const tileColor = '#123456';
-      const newTileColor = '#123654';
-      const newTileValue = 20;
-      final tile = Tile(id: tileId, value: tileValue, color: tileColor);
+    test('should return new CardModel when use copyWith function', () {
+      const cardId = '1';
+      const cardValue = 10;
+      const cardColor = '#123456';
+      const newCardColor = '#123654';
+      const newCardValue = 20;
+      final card = CardModel(id: cardId, value: cardValue, color: cardColor);
 
-      final newTile = tile.copyWith(color: newTileColor);
-      expect(newTile.id, tileId);
-      expect(newTile.value, tileValue);
-      expect(newTile.color, newTileColor);
+      final newCard = card.copyWith(color: newCardColor);
+      expect(newCard.id, cardId);
+      expect(newCard.value, cardValue);
+      expect(newCard.color, newCardColor);
 
-      final newTile2 = tile.copyWith(value: newTileValue);
-      expect(newTile2.id, tileId);
-      expect(newTile2.value, newTileValue);
-      expect(newTile2.color, tileColor);
+      final newCard2 = card.copyWith(value: newCardValue);
+      expect(newCard2.id, cardId);
+      expect(newCard2.value, newCardValue);
+      expect(newCard2.color, cardColor);
     });
 
     test('should return correctly when using ==', () {
-      final tile1 = Tile(id: '1', color: '#123456', value: 1);
-      final tile2 = Tile(id: '1', color: '#123456', value: 1);
-      final tile3 = Tile(id: '1', color: '#123456', value: 2);
+      final card1 = CardModel(id: '1', color: '#123456', value: 1);
+      final card2 = CardModel(id: '1', color: '#123456', value: 1);
+      final card3 = CardModel(id: '1', color: '#123456', value: 2);
 
-      expect(tile1, tile2);
-      expect(tile1, isNot(equals(tile3)));
+      expect(card1, card2);
+      expect(card1, isNot(equals(card3)));
     });
   });
 }

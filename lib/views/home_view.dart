@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:manabie_code_challenge/blocs/detail/detail.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manabie_code_challenge/locator.dart';
-import 'package:manabie_code_challenge/providers/data_repository.dart';
+import 'package:manabie_code_challenge/repositories/data_repository.dart';
 import 'package:manabie_code_challenge/utils/keys.dart';
 import 'package:manabie_code_challenge/widgets/card_detail.dart';
 
@@ -52,20 +52,20 @@ class _HomeViewState extends State<HomeView> {
                     );
                   }
                   if (state is ListLoaded) {
-                    final tiles = state.tiles;
+                    final cards = state.cards;
                     return ListView.builder(
-                      key: LIST_TILES_KEY,
+                      key: LIST_CARDS_KEY,
                       scrollDirection: Axis.horizontal,
-                      itemCount: tiles.length,
+                      itemCount: cards.length,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           onTap: () {
                             _detailBloc
-                                .dispatch(SelectDetail(tile: tiles[index]));
+                                .dispatch(SelectDetail(card: cards[index]));
                           },
                           child: CardElement(
-                            key: listTileItemKey(tiles[index].id),
-                            tile: tiles[index],
+                            key: cardItemKey(cards[index].id),
+                            card: cards[index],
                           ),
                         );
                       },
@@ -82,16 +82,16 @@ class _HomeViewState extends State<HomeView> {
               builder: (BuildContext context, DetailState state) {
                 if (state is DetailUninitialized) {
                   return Container(
-                    key: EMPTY_DETAIL_TILE_KEY,
+                    key: EMPTY_DETAIL_CARD_KEY,
                   );
                 }
                 if (state is DetailSelected) {
                   return GestureDetector(
                     onTap: () =>
-                        _listBloc.dispatch(IncreaseTile(tile: state.tile)),
+                        _listBloc.dispatch(IncreaseCard(card: state.card)),
                     child: CardDetail(
-                      key: DETAIL_TILE_KEY,
-                      tile: state.tile,
+                      key: DETAIL_CARD_KEY,
+                      card: state.card,
                     ),
                   );
                 }

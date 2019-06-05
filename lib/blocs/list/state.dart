@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'package:manabie_code_challenge/models/tile.dart';
+import 'package:manabie_code_challenge/models/card.dart';
 
 abstract class ListState extends Equatable {
   ListState([final props = const []]) : super(props);
@@ -12,9 +12,9 @@ class ListLoading extends ListState {
 }
 
 class ListLoaded extends ListState {
-  final List<Tile> tiles;
+  final List<CardModel> cards;
 
-  ListLoaded({this.tiles}) : super([tiles]);
+  ListLoaded({this.cards}) : super([cards]);
 
   @override
   String toString() => 'ListLoaded';

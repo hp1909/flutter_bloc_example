@@ -11,15 +11,15 @@ import 'package:manabie_code_challenge/blocs/list/bloc.dart';
 
 class DetailBloc extends Bloc<DetailEvent, DetailState> {
   final ListBloc listBloc;
-  StreamSubscription _tileSubscription;
+  StreamSubscription _cardSubscription;
 
   DetailBloc({@required this.listBloc}) {
-    _tileSubscription = listBloc.state.listen((state) {
+    _cardSubscription = listBloc.state.listen((state) {
       if (state is ListLoaded && currentState is DetailSelected) {
-        final currentTile = (currentState as DetailSelected).tile;
-        final updatedTile =
-            state.tiles.firstWhere((tile) => tile.id == currentTile.id);
-        dispatch(SelectDetail(tile: updatedTile));
+        final currentCard = (currentState as DetailSelected).card;
+        final updatedCard =
+            state.cards.firstWhere((card) => card.id == currentCard.id);
+        dispatch(SelectDetail(card: updatedCard));
       }
     });
   }
@@ -30,13 +30,13 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
   @override
   Stream<DetailState> mapEventToState(DetailEvent event) async* {
     if (event is SelectDetail) {
-      yield DetailSelected(tile: event.tile);
+      yield DetailSelected(card: event.card);
     }
   }
 
   @override
   void dispose() {
-    _tileSubscription.cancel();
+    _cardSubscription.cancel();
     super.dispose();
   }
 }
