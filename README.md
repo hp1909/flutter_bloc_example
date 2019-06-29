@@ -1,4 +1,4 @@
-# Manabie Code Challenge
+# Flutter BloC Architecture Example
 
 ## How to run project
 
